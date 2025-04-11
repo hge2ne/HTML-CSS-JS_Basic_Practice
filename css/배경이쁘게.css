@@ -1,0 +1,131 @@
+.main-background {
+    width: 100%;
+    height: 500px;
+    background-image:url(../img/62f5c490b5b3acbe9be92a86322544c5.jpg), url(../img/6a1f76de2ad1ddd213dbf9cb08e88472.jpg);
+    background-size:80%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    filter: brightness(40%);
+    padding: 1px;
+    position:relative;
+    z-index: 0;
+    /* Í∏??î® ÎßàÏßÑ?Éë ?†ú???Î°? Ï£ºÎäî Î≤? : Î∂?Î™®ÌÅ¥?ûò?ä§?óê ?å®?î© ?ïΩÍ∞? ?Ñ£Í∏? */
+}
+
+.main-title {
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.sub-title {
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    font-size: 20px;
+    text-align: center;
+    margin-left: 200px;
+    padding: 3px;
+}
+
+.main-button {
+    top: 365px;
+    left:1225px;
+    padding:15px;
+    font-size: 20px;
+    border:none;
+    background:white;
+    border-radius: 5px;
+    left: 0;
+    right: 0;
+    margin:auto;
+    width: 200px;
+}
+
+.sub-background {
+    width: 700px;
+    max-width: 600px;
+    box-sizing: border-box;
+    height: 500px;
+    background-color: rgb(187, 255, 148);
+    position: relative;
+    top: -100px;
+    left: 0;
+    right: 0;
+    margin:auto;
+    padding: 20px;
+    text-align: center;
+
+}
+
+.input[type="text"] {
+      padding: 10px;
+      font-size: 20px;
+      border-radius: 5px;
+      border: 2px solid black;
+      margin-left: 70px;
+      margin:auto;
+
+/*?ù¥?ïò ?àô?†ú */
+
+}
+.form-background {   
+    padding: 80px;
+    background-color: rgb(156, 158, 157);
+
+}
+
+
+.form-white {
+    background-color: azure;
+    padding:30px;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    font-size:20px;
+    border:1px solid black;
+    border-radius:5px;
+    box-sizing: border-box;
+}
+
+div,input,textarea {
+    box-sizing: border-box;
+}
+
+body {
+    margin:0px;
+}
+
+.w-50 {
+    width: 50%;
+    float:left;
+    padding: 10px;
+}
+
+.w-100 {
+    width: 100%;
+    padding: 10px;
+}
+
+.yellow-button {
+    background-color: yellow;
+    color: rgb(0, 0, 0);
+    width: 100px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: rgb(255, 14, 38);
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    float: right;
+    margin: 0 auto;
+    
+}

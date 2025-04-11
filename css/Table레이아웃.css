@@ -1,0 +1,28 @@
+td,th {
+    border: 1px solid black;
+}
+table{
+    border-collapse: collapse;
+}
+.skyblue {
+    background-color: skyblue;
+    width:80%;
+    max-width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+}
+
+.white {
+    background-color: white;
+    width: 80%;
+    height: 300px;
+    margin-left: 95px; /*더 좋은 방법 있을듯*/
+    display: block;
+    float: left;
+    
+}
+
+.margin{
+    margin: 10px 20px;
+}
+
