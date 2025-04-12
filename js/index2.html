@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="main.css">
+
 </head>
-<body>
+
     <div class="alert-box" id="alertopen">
         <p id="title">알림창임</p>
         <button onclick="alertclose('none');">닫기</button>
     </div>
     <button onclick="idAlert('block');">버튼1</button>
     <button onclick="pwAlert('block');">버튼2</button>
+    <button type="button" class="btn btn-secondary">Secondary</button>  
+
+
     
     <script>
 
@@ -23,6 +27,7 @@
         function idAlert(){
             document.getElementById('title').innerHTML='아이디를 입력하세요.';
             document.getElementById('alertopen').style.display='block';
+        
 
         }    
         function pwAlert(){
