@@ -6,10 +6,78 @@
     display: none;
 }
 
-.show {
+.custom-group.show {
     display: block;
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
 }
 
 .custom-group {
     display: none;
+    overflow:hidden;
+    max-height: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: max-height 0.5s ease, opacity 0.5 ease;
+}
+
+.slide-box{
+    float: left;
+    width: 100vw;
+}
+.slide-box img{
+    width: 100%;
+}
+.slide-container{
+    width: 300vw;
+    transform: translateX(-100vw);
+    transition: all 1s;
+}
+
+.slide-wrapper {
+    width: 100vw; /* 하나의 슬라이드 크기 */
+  overflow: hidden; /* 넘치는 슬라이드 숨김 */
+  position: relative;
+}
+#text-slider {
+    display: flex;                   /* 가로 정렬 */
+    width: 300vw;                    /* 슬라이드 3개니까 100vw * 3 */
+    transition: transform 0.5s ease-in-out; /* 부드러운 슬라이드 이동 */
+  }
+  .slide {
+    width: 100vw;
+    height: 300px;       /* 높이는 자유롭게 조절 */
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    font-size: 3rem;
+  }
+  .next {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    transition: background-color 0.3s;
+  }
+  
+  .next:hover {
+    background-color: #0056b3;
+  }
+
+  .navber {
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+  }
+.navbar-brand {
+font-size: 30px;
+transition: all 1s;
 }
