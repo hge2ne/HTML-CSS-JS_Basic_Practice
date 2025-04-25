@@ -11,8 +11,8 @@
         <p id="title">알림창임</p>
         <button onclick="alertclose('none');">닫기</button>
     </div>
-    <button onclick="idAlert('block');">버튼1</button>
-    <button onclick="pwAlert('block');">버튼2</button>
+    <button onclick="showIdAlert()">버튼1</button>
+    <button onclick="showPwAlert()">버튼2</button>
     <button type="button" class="btn btn-secondary">Secondary</button>  
 
 
@@ -24,16 +24,12 @@
         }
 
 
-        function idAlert(){
-            document.getElementById('title').innerHTML='아이디를 입력하세요.';
-            document.getElementById('alertopen').style.display='block';
+        function showIdAlert() {
+            alert('아이디를 입력하세요.');
+        }
         
-
-        }    
-        function pwAlert(){
-            document.getElementById('title').innerHTML='비밀번호를 입력하세요.';
-            document.getElementById('alertopen').style.display='block';
-
+        function showPwAlert() {
+            alert('비밀번호를 입력하세요.');
         }
        
 

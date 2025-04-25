@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="어쩌구.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  
+</head>
+<body>
+      <div class="container mt-5">
+        <ul class="list">
+          <li class="tab-button">Products</li>
+          <li class="tab-button orange">Information</li>
+          <li class="tab-button">Shipping</li>
+        </ul>
+        <div class="tab-content">
+          <p>상품설명입니다. Product</p>
+        </div>
+        <div class="tab-content show">
+          <p>스펙설명입니다. Information</p>
+        </div>
+        <div class="tab-content">
+          <p>배송정보입니다. Shipping</p>
+        </div>
+      </div> 
+      <!-- 모달창 -->
+      <div class="black-bg">
+        <div class="white-bg">
+          모달창 내용
+        </div>
+      </div
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        for(var i = 0; i < 3; i++){
+
+          $('.tab-button').eq(i).on('click', function(){  
+            $('.tab-button').removeClass('orange');
+            $('.tab-button').eq(i).addClass('orange');
+            $('.tab-content').removeClass('show');
+            $('.tab-content').eq(i).addClass('show');
+          })
+        //이상을 탭기능 함수로 축약하기//
+        for (let i = 0; i < $('.tab-button').length; i++){
+         $('.tab-button').eq(i).on('click', function(){
+          탭열기(i)
+          })
+          function 탭열기(구멍){
+            $('.tab-button').removeClass('orange');
+            $('.tab-button').eq(구멍).addClass('orange');
+            $('.tab-button').removeClass('show');
+            $('.tab-button').eq(구멍).addClass('show');
+            //구멍에 원하는 숫자; 순서대로 버튼에 해당하는 숫자 입력하면 작동함.
+            //심화 ; 버튼 3개의 부모인 ul class="list" 에 이벤트리스너 1개 추가해서 위와 똑같은 코딩가능//
+            /* $('.list').on('click', function(){
+              지금 누른 게 버튼 0이면 탭열기(0) 실행
+              지금 누른 게 버튼 0이면 탭열기(1) 실행
+              지금 누른 게 버튼 0이면 탭열기(2) 실행
+             */
+            $('.list').click(function(e){
+              if(e.target == document.querySelectorAll('.tab-button')[0]){
+                탭열기[0]
+              }
+              if(e.target == document.querySelectorAll('.tab-button')[1]){
+                탭열기[1]
+              if(e.target == document.querySelectorAll('.tab-button')[2]){
+                탭열기[2]
+              }}
+            })
+
+            }
+          }
+        }
+/* data set 문법(잡기술) : 
+박스에 데이터이름 값 숨겨놓기. 지금 누른 버튼의 id가 달린 탭을 열어줘 명령 가능
+ */
+        $('.list').click(function(){
+          탭열기(지금누른버튼에 숨어있던 data id)
+        });
+        $('.list').click(function(e){
+          탭열기(e.target.dataset.id)
+        }); // 지금 누른 버튼 찾기 : e.target
+        /* 버튼에 숨어있는 data id 찾기 : .dataset.id */
+
+        
+        /* 이하는 자세한 코딩임 위는 다 단축
+                  })
+         $('.tab-button').eq(1).on('click', function(){  
+            $('.tab-button').removeClass('orange');
+            $('.tab-button').eq(1).addClass('orange');
+            $('.tab-content').removeClass('show');
+            $('.tab-content').eq(1).addClass('show');
+                  })
+          $('.tab-button').eq(2).on('click', function(){  
+            $('.tab-button').removeClass('orange');
+            $('.tab-button').eq(2).addClass('orange');
+            $('.tab-content').removeClass('show');
+            $('.tab-content').eq(2).addClass('show');
+             })
+         */
+                  /* 반복적 셀렉터는 변수에 넣기(단축)
+              var button = $('.tab-button');
+
+                button.eq(0).on('click', function(){
+                button.removeClass('orange');
+                button.eq(0).addClass('orange');
+                $('.tab-content').removeClass('show');
+                $('.tab-content').eq(0).addClass('show');
+                })
+                for 반복문
+                for (횟수)
+                복붙 코드
+                EX. for(var i = 0; i < 3; i++){
+                  console.log('안녕')
+                }
+                 */
+                document.querySelector('.black-bg').addEventListener('click', function(e){
+                  document.querySelector('.black-bg').classList.remove('show-modal');
+                  if($(e.target).is.$('.black-bg')) {
+                    document.querySelector('.black-bg').classList.remove('show-modal');
+                  }
+                  
+                })
+                </script>
+            
+              
+              
+     
+
+   
+</body>
+</html>

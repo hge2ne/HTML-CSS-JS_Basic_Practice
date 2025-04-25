@@ -1,0 +1,230 @@
+<!-- Array와 Object 자료형 ; 자료 저장/수정/출력
+
+1. Array 자료형
+
+var car = ['소나타', 50000, 'white'];
+console.log(car[1]);
+1-대괄호에 자료 입력, 콤마로 구분
+2-출력 방법 : 대괄호에 순서에 해당하는 숫자 입력
+3.수정 방법 : 등호 쓰기 ex) car[1] = 60000;
+결론 : 여러 자료를 변수 하나에 저장할때 사용
+Array 특징
+: 순서개념 있음. 왼쪽에 있는 자료일수록 앞에 있는 자료
+
+- 가나다순 정렬
+- x번 자료부터 x번 자료까지 자르기
+- x번 자료 바꾸기
+- 맨 뒤, 맨 앞에 자료 넣기
+- 원하는 자료가 들어있나 검색
+
+ 위에 유용.
+ex) array자료.sort() 하면 가나다순 정렬되고
+array자료.slice(x, y) 하면 x번부터 y번 전까지 자를 수 있고 
+array자료.push(x) 하면 x를 맨 뒤에 입력할 수 있고
+
+2. Object 자료형
+
+var car2 = { name : '소나타', price : 50000};
+console.log(car2['name']);
+console.log(car2.name)
+1- 중괄호에 자료 입력,콤마로 구분
+2- 출력 방법 : 대괄호에 '자료이름' 입력 / .자료이름 입력 EX) console.log(car2['name']);
+3. 수정 방법 : car2['name']='그랜저'
+Object 특징
+: key : value 형태의 자료 저장 가능 *** 중요. 지주사용하는 자료형임
+: 자료이름 => key, 실제 자료 => value 라고 부름
+: 순서 개념 없음. 1번째 자료 순서 보장 X
+
+
+  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="card p-3">
+            <span class="car-title">상품명</span>
+            <span>가격</span>
+        </div>
+    </div>
+    <!-- 셀렉트 폼  만들기 -->
+    <form class="container my-5 form-group">
+        <p>상품선택</p>
+        <select class="form-select mt-2">
+          <option>모자</option>
+          <option>셔츠</option>
+        </select>
+        <select class ="form-select mt-2 form-hide">
+            <option>95 </option>
+            <option>100</option>
+            </select>
+            
+   </form>
+
+<script>
+        var car2 = {name : '소나타', price : 50000};
+
+        document.querySelector('.car-title').innerHTML=car2.name;
+        /*  위에꺼 직역
+        웹문서에서 'car-title'이라는 클래스를 가진 요소를 찾아서
+        그 요소의 HTML 내용을 car2 객체의 name값('소나타')으로 변경  : innerHTML   
+        
+        위 코드에서 Object 안에 Array 넣기*/
+        var car2 = { name : '소나타', price : [50000,3000,4000]}
+        document.querySelector('.car-title').innerHTML = car2.name;
+         console = (car2['name']);
+         /* 문제. car2에 있는 50000 이라는 데이터를 뽑아서 html 가격표시 부분에 출력하려면?
+        console.log(car2.price[순서]) =>> 오브젝트 형태 + 어레이 형태
+
+        왜 배울까?? =>> 웹서비스 개발 방식 2가지 때문
+
+        1. Sever-side rendering (서버에서 완성된 HTML 파일 보냄. 데이터 포함)
+        보낸 데이터를 받아서 html에 띄움. 이때 데이터 받기 : "데이터바인딩" 라고 함
+        2. client-side rendering (서버에서 데이터만 가져옴)
+        받은 데이터를 JS를 이용해 고객의 웹 브라우저 안에서 html 완성
+        클라 사이드 렌더링 장점
+        - 코딩 많이 쓴 큰 페이지 만들 때 사용
+        - 코드 축약 가능 (jQuery, React, Vue 사용)
+        
+         select form 만들기
+         input 태그랑 똑같이 .value 쓰면 유저가 select에서 뭐 선택했는지 알수 있음
+        */
+        var value = $('.form-select').eq(0).val();
+                if (value == '셔츠'){
+                    $('.form-select').eq(1).removeClass('form-hide');
+                } 
+    /* 위 코드에서 셀렉트 조작할때마다 실행시켜야함
+    : 코드 맨 위에 $('.form-select').eq(0).on('input',function(){
+    }) 이 이벤트리스너 사용하면 됨. jQuery로 작동시 실행 
+     
+    서버에서 보낸 데이터 갯수에 맞게 <option> 태그 생성하기
+        
+        1. <div> 안에 <p> 태그 생성하기 (JS로 html 생성하기)
+            
+            <div id="test">
+  
+            </div>
+
+            <script>
+            var a = '<p>안녕</p>';
+            document.querySelector('#test').insertAdjacentHTML('beforeend', a);
+       
+            - 박스 id 부여
+            - 스크립트 열고 a를 p태그 '문자' 선언
+            - 쿼리셀렉터,id 로 박스 찾고 insertADjacentHTML 로 html 생성
+            - beforeeend : 안쪽 맨 밑에 추가
+
+            2. 다른 방법
+            <div id="test">
+  
+            </div>
+
+            <script>
+             var a = '<p>안녕</p>';
+             $('#test').append(a);
+            < /script>
+
+            : append : 안쪽 맨 밑에 추가
+*/
+                else if (value == '바지'){
+                    $('form-select').eq(1).removeClass('.form-hide');
+                    $('.form-select').eq(1).html('');
+                    //여기에 반복문을 써서 바지 데이터 갯수만큼 옵션 생성 가능//
+                  //  for (let i =0; i<pants.length;i++){
+                        //옵션 생성 명령
+                        pants.forEach(function(a){
+                            $('.form-select').eq(1).append(`<option>${a}</option>`)
+
+                        })
+                    var 템플릿 = `<option>28</option><option>30</option>`;
+                    $('.form-select').eq(1).append(템플릿)
+                }
+                /* 직역
+                1. 일단 둘째 셀렉트 보여줘 (form-hide 삭제)
+                2. 둘째 셀렉트 안 비워줘
+                3. 템플릿이라는 html 만들어서 둘째 셀렉트 안에 append 해줘 
+                
+                위 반복문과 다른 NEW 반복문 <forEach> 
+                    
+                    -array 자료 뒤에 붙일 수 있음
+                    
+                    var pants = [28, 30, 32];
+                    pants.forEach(function(a,i){
+                     console.log(a)
+                    });
+                    ** 직역
+                    1. pants 라는 이름의 변수에 28.30,32 가 들어있는 배열을 저장해라
+                    2. pants/forEach(function(a,i)) -> pants 배열의 각 값이 하나씩 a에 들어가면서 출력됨. 
+                    ** a : 현재 요소 값
+                    ** i : 현재 요소의 인덱스
+                    요약 : '28,30,32'로 구성된 pants 배열의 각 요소를 하나씩 a에 넣고 그 값을 콘솔에 출력한다
+                    ex) 28
+                        30        
+                        32
+                    
+
+
+
+                    콜백함수 : function() 괄호 안 : 에 파라미터 2개까지 작명 가능
+                    1번 파라미터 : 반복문 돌 때마다 array 안의 각각 데이터 (28,30,32)
+                    2번 파라미너 : 반복문 돌 때마나 0~1씩 증가하는 정수
+                    **** a : pants 배열의 각 요소 값 ex) 28,30,32
+                    결론 : 위 반복문과 동일
+                    
+                    위 코딩에서 for 반복문 대신 
+                     pants.forEach(function(a){
+                      $('.form-select').eq(1).append(`<option>${a}</option>`) 쓰기 가능
+                    
+                    <오브젝트 자료 다룰 때 for in 반복문 >
+
+                    var obj = { name : 'kim', age : 20 }
+
+                    for (var key in obj){
+                    console.log(key)
+                    }
+                    위는 key값 출력
+
+                      console.log(obj[key]) 는 vlaue 값 출력
+
+                      <정리> 반복문 용도
+                      1. 코드 복붙(재사용성 up)
+                      2. array,object 자료 다 꺼낼때
+
+                    <arrow function> 문법 - 좀 더 쉬운 반복문
+
+                        var pants = [28, 30, 32];
+                        pants.forEach(function(a){
+                         console.log(a)
+                        });
+
+                        pants.forEach((a) => {
+                          console.log(a)
+                        });
+
+                        -funtion 대신 => {}
+                        - 일반 함수 funtion 과 차이점?
+                        : 일반 함수는 함수 안에서 this 써야할 경우 알맞게 재정의 해줌
+                        - 일반 함수 -> 자신만의 this 가짐. EX) 
+                        var obj = {
+                        name: 'Shirt',
+                        show: function(){
+                        console.log(this.mame);///this는 obj를 뜻함 
+                        }
+                    }
+                        obj.show(); //shirt를 말함.
+                        arrow는 재정의 X 바깥에 있던 this 그대로 씀
+                        결론 : 이벤트리스너 콜백함수 안에서 this와 arrow funtion 쓰면 오류 가능성 있음.
+                      */
+
+                
+
+       
+        </script>
+    
+</body>
+</html>
