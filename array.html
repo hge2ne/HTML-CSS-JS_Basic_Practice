@@ -43,6 +43,7 @@ Object 특징
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="stylesheet" rel="array.css">
     
 </head>
 <body>
@@ -94,11 +95,20 @@ Object 특징
          select form 만들기
          input 태그랑 똑같이 .value 쓰면 유저가 select에서 뭐 선택했는지 알수 있음
         */
-        var value = $('.form-select').eq(0).val();
-                if (value == '셔츠'){
+             $('.form-select').eq(0).on('input',function(){
+                 
+                let value = $('.form-select').eq(0).val();
+                  if (value == '셔츠'){
                     $('.form-select').eq(1).removeClass('form-hide');
-                } 
-    /* 위 코드에서 셀렉트 조작할때마다 실행시켜야함
+                }})
+        
+                /* eq(index) : jQuery함수
+                1. 역할: 객체(여러개요소) 중에 특정 인덱스(순번)에 해당하는 하나의 요소 선택하는 함수.
+                
+                val() 함수 : jQuery함수
+                1. 역할 : 폼요소(input,select,textarea) 의 값 불러오기/설정하는 함수
+                위 코드에서 역할 : 셀렉트 첫번째 요소의 현재 선택된 값 불러오기.
+                그 값이 셔츠 면 ~ 2번째 요소'모자'의 박스 보여줘/* 위 코드에서 셀렉트 조작할때마다 실행시켜야함
     : 코드 맨 위에 $('.form-select').eq(0).on('input',function(){
     }) 이 이벤트리스너 사용하면 됨. jQuery로 작동시 실행 
      
@@ -131,9 +141,10 @@ Object 특징
 
             : append : 안쪽 맨 밑에 추가
 */
-                else if (value == '바지'){
-                    $('form-select').eq(1).removeClass('.form-hide');
-                    $('.form-select').eq(1).html('');
+    
+            // else if (value == '바지'){
+                   // $('form-select').eq(1).removeClass('.form-hide');
+                 //   $('.form-select').eq(1).html('');
                     //여기에 반복문을 써서 바지 데이터 갯수만큼 옵션 생성 가능//
                   //  for (let i =0; i<pants.length;i++){
                         //옵션 생성 명령
@@ -141,9 +152,11 @@ Object 특징
                             $('.form-select').eq(1).append(`<option>${a}</option>`)
 
                         })
+        
+
                     var 템플릿 = `<option>28</option><option>30</option>`;
                     $('.form-select').eq(1).append(템플릿)
-                }
+                
                 /* 직역
                 1. 일단 둘째 셀렉트 보여줘 (form-hide 삭제)
                 2. 둘째 셀렉트 안 비워줘
@@ -221,10 +234,8 @@ Object 특징
                         결론 : 이벤트리스너 콜백함수 안에서 this와 arrow funtion 쓰면 오류 가능성 있음.
                       */
 
-                
-
-       
-        </script>
+                      <!-- 최신 jQuery 3.x 버전 (minified - 압축 버전, 로딩 속도 빠름) -->
+                      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
 </body>
 </html>
