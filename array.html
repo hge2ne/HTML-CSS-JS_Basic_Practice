@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
   <meta charset="UTF-8">
 
@@ -21,27 +21,100 @@
     <select class="form-select mt-2">
       <option value="모자">모자</option> 
       <option value="셔츠">셔츠</option>
+      <option value="바지">바지</option>
+
       <!-- value 값을 세팅해야 아래 스크립트에서 제이쿼리 가능 -->
     </select>
     <select class="form-select mt-2 form-hide">
-      <option>95<option>
-      <option>100<option>
+      <option>95</option>
+      <option>100</option>
     </select>
 </form>
+
+ <div id="test">
+  <h4>반가워
+  </h4>
+ </div>
+
 <script>
+  let pants = [28,30,32,34];
+  let shirts = [95,100,105];
+
+
+  //이하 let줄 $ 위치는 그윗줄과 동일하므로 function 으로 묶여있으니 'this'라고 넣어도 됨
   $('.form-select').eq(0).on('input',function(){//: input을 건드릴 때마다 아래의 코드 실행
     let value = $('.form-select').eq(0).val(); //폼 셀렉트의 요소0의 값을 value라고 하자
   if(value == '셔츠'){//값이 셔츠일때 폼 숨김 기능 취소 -> 폼 보여줘요
     $('.form-select').eq(1).removeClass('form-hide');
+    $('.form-select').eq(1).html('');
+    shirts.forEach(function(a){
+      $('.form-select').eq(1).append(`<option>${a}</option>`);
+
+  })
+  }else if(value =='바지'){
+    $('.form-select').eq(1).removeClass('form-hide');
+    $('.form-select').eq(1).html('');
+    pants.forEach(function(a){
+      $('.form-select').eq(1).append(`<option>${a}</option>`);
+    });
+  
   } else {
     $('.form-select').eq(1).addClass('form-hide');
-  }
+  }}
+);
+    /* 이하 html에 바지사이즈 직접 추가 방법
+    let 템플릿 =`<option>28</option>
+      <option>30</option>`;
+ 
+    $('.form-select').eq(1).html(템플릿);
+  } 
   });
-   let 템플릿 = '<p>안녕<p>';
-  $('#test').append(템플릿);
-  
-</script>
 
+  << js로 html 생성>> : 
+1. div 박스 만들고 id 부여
+2. js에 let a  = '<p>안녕</p>';
+$('#id').append(a);
+
+<<js로 html 문자 삽입>>
+1. 삽입할 박스 지정 후 공백 삽입 $(.form-select).eq(1).html(' ');
+2. 삽입할 문자 선언 let 템플릿 = `<option>라라라</option>`;
+3. 삽입 실행 $('.form-select').eq(1).append(템플릿);
+ 
+
+
+
+*/
+  /* <<이하 바지 사이즈에 대한 서버 데이터 받아와서 옵션태그 달기>>
+ input 건드릴 때마다 이하 실행 코드 밑에
+  let pants = [28,30,32];
+  넣고
+  값 '바지' 선택시 html(' ') 밑에
+  for(let i = 0;i< pants.length; i++){
+  }
+
+  <<forEach 반복문 (심화)>>
+1. input 건드릴 때마다 이하 실행 코드 밑에
+  let pants = [28,30,32]; 
+2.  .html 밑에
+    pants.forEach(function(a){
+    $('.form-select').eq(1).append(`<option>a</option>`);
+    })
+3. forEach function() 에 a 변수 넣기
+a = pants 각각 요소를 뜻함
+옵션 태그에도 ${a} 넣기
+  
+  */
+/* <<obj 자료 반복문 돌리기 >>
+let obj = {name : 'kim', age : 20}
+for (let key in obj){
+console.log(obj[key]);
+}
+
+
+ */ 
+
+
+</script>
 
 
 
