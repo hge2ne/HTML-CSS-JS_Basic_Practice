@@ -4,6 +4,7 @@
          <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="list.css">
    
   <!-- 여기에 부트스트랩 CSS 추가 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -25,36 +26,94 @@
 
   <div class="container">
     <div class="row">
-        <div class="col-sm-4">
-          <img src="https://placehold.co/600" class="w-100">
-          <h5>Card title</h5>
-          <p>가격 : 70000</p>
-          <button class="btn btn-danger">주문하기</button>
         </div>
     </div>
-   
+  
      
 <!-- 버튼 -->
       <div class="container">
         <button class="btn btn-danger" id="more">더보기</button>
+        <button class="btn btn-danger sort">가격정렬</button>
+
       </div>
       
-      <script>
-        $(document).ready(function(){
+      
+      <script> //더보기 버튼
+          $(document).ready(function(){
           let products = [
           { id : 0, price : 70000, title : 'Blossom Dress' },
           { id : 1, price : 50000, title : 'Springfield Shirt' },
           { id : 2, price : 60000, title : 'Black Monastery' },
-        ]
-        products.forEach((a,i)=>{
-            let 템플릿 =
-              `<div class="col-sm-4">
-              <img src="https://placehold.co/600" class="w-100">
-              <h5>${products[i].title}</h5>
-              <p>${products[i].price}</p>
-              </div>`;
-            $('.row').append(템플릿);
-        })});
+        ];
+           products.forEach((a,i)=>{
+              let 템플릿 =
+                `<div class="col-sm-4">
+                <img src="https://placehold.co/600" class="w-100">
+                <h5>${products[i].title}</h5>
+                <p>가격 : ${products[i].price}</p>
+                <button class="btn btn-danger">주문하기</button>
+                </div>`;
+              $('.row').append(템플릿);
+            });
+            $('.sort').click(function(){
+            products.sort(function(a,b){
+             return a.price - b.price;
+            
+             }); 
+             
+             products.forEach((a,i)=>{
+              let 템플릿 = 
+                `<div class="col-sm-4">
+                  <img src="https://placehold.co/600" class="w-100">
+                   <h5>${products[i].title}</h5>
+                   <p>가격 : ${products[i].price}</p>
+                   <button class="btn btn-danger">주문하기</button>
+                   </div>`;
+                $('.row').append(템플릿);
+             }); return;  
+           }); 
+           console.log(products); 
+          });
+          
+
+            /* 더보기 버튼 누르면 상품 3개 가져와서 출력하기 */
+            let clickCount =0;
+            $('#more').click(function(){
+              clickCount++;
+
+              let targetUrl =''; //더보기2번 시 요청할 Url
+
+              if(clickCount ===1){
+                targetUrl ="https://codingapple1.github.io/js/more1.json";
+              } else if(clickCount ===2){
+                 targetUrl='https://codingapple1.github.io/js/more2.json';
+              } else if(clickCount >=3){
+                 $('#more').addClass('d-none');
+                 alert('더 이상 상품이 없습니다.');
+                 return;
+                
+
+                };
+                $.get(targetUrl).done((data)=>{
+                console.log(data);
+                 data.forEach((a,i)=>{
+                    let 더보기 = 
+                      `<div class="col-sm-4">
+                        <img src="https://placehold.co/600" class="w-100">
+                        <h5>${data[i].title}</h5>
+                       <p>가격 : ${data[i].price}</p>
+                       <button class="btn btn-danger">주문하기</button>
+                      </div>`;
+                    $('.row').append(더보기);
+                      }); return;
+              });
+            });
+               
+               
+                
+            
+
+            
           
       
        /* 이상을 반복문으로 써보깅 (중요.
@@ -64,8 +123,7 @@
         일단 위에꺼 제이쿼리로 변경 */
        
          
-        
-      
+
 /*  JS에서 덧셈기호 쓰면 문자 2개 붙이기 가능
         숫자 + 숫자는 계산해줌
         문자 + 숫자 는 1개가 문자이므로 문자 2개 붙여줌
@@ -110,7 +168,6 @@
     console.log('실패함')
   }); */
  
-
-      </script> 
+      </script>
 </body>
 </html>
