@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div>장바구니페이지
+         <p class="상품"></p>
+    </div>
+   
+    
+
+    <script>
+        //로컬스토리지에서 cart 꺼내
+        //array 출력
+        //array 갯수에 맞게 p 생성
+       let cartArr = localStorage.getItem('cart'); //배열 변환 작업 필요. 아니면 문자열.length 셈
+       let newcartArr = JSON.parse(cartArr); 
+       console.log(newcartArr);
+        function countArrayElements(newcartArr){
+            return newcartArr.length;
+        }console.log(newcartArr.length);
+        newcartArr.forEach((a,i) => { 
+          let p =`<p>${newcartArr[i]}</p>`
+            $('.상품').append(p);
+          });   
+     function countDuplicate(newcartArr){
+        const counts = {};
+        for(let i = 0; i<newcartArr.length;i++){
+        const item = newcartArr[i];
+        if(newcartArr !==''){ //빈문자열 제외하고 카운트
+            if (counts[item]){ //counts 객체에 newcartArr[i] 가 있으면
+              counts[item]+=1;
+        } else {
+            counts[item] =1;
+        }};
+        }
+        return counts;
+        } 
+        console.log(countDuplicate(newcartArr));
+
+   
+    </script>
+</body>
+</html>

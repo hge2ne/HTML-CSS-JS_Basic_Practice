@@ -36,6 +36,7 @@
         <button class="btn btn-danger sort">가격순 정렬</button>
         <button class="btn btn-danger" id="sort1">다나가순 정렬</button>
         <button class="btn btn-danger" id="filter">6만원 이하</button>
+        
 
       </div>
            
@@ -163,17 +164,18 @@
     $('.row').append(템플릿);
    })
   })
- // $('.row').on('click','.buy',function(){ //접속시 최초 1회 뿐 아니라 row 범위 내에서 항상 작동하게끔하는 함수
-    $('.buy').click(function(e){
+ /$('.row').on('click','.buy',function(e){ //접속시 최초 1회 뿐 아니라 row 범위 내에서 항상 작동하게끔하는 함수
       let title = $(e.target).siblings('h5').text();
      
     if(localStorage.getItem('cart') != null){ //cart가 있으면 
       let 꺼낸거 = JSON.parse(localStorage.getItem('cart')); //로컬스토리지에 저장된 건 JSON문자형태
       꺼낸거.push(title);
+      console.log(꺼낸거);//title 요소가 추가된 꺼낸거 출력
+      localStorage.setItem('cart',JSON.stringify(꺼낸거)); 
     } else {
        localStorage.setItem('cart',JSON.stringify([title])) //cart가 없으면
     }
-  
+    })
 
       </script>
 </body>
