@@ -35,12 +35,13 @@
         <button class="btn btn-danger" id="more">더보기</button>
         <button class="btn btn-danger sort">가격순 정렬</button>
         <button class="btn btn-danger" id="sort1">다나가순 정렬</button>
+        <button class="btn btn-danger" id="filter">6만원 이하</button>
 
       </div>
       
       
 <script> //더보기 버튼
-   $(document).ready(function(){
+  $(document).ready(function(){
      let products = [
     { id : 0, price : 70000, title : 'Blossom Dress' },
     { id : 1, price : 50000, title : 'Springfield Shirt' },
@@ -54,9 +55,27 @@
       <h5>${products[i].title}</h5>
       <p>가격 : ${products[i].price}</p>
       <button class="btn btn-danger">주문하기</button>
+      <button class="buy">구매</button>
        </div>`;
     $('.row').append(템플릿);
   });//~~~~~~~~~~~~완료
+  $('.sort').click(function(){
+    products.sort(function(a,b){
+      return a.price - b.price;
+    });
+    $('.row').html('');
+    products.forEach((a,i)=>{
+      let 템플릿 =
+     `<div class="col-sm-4">
+      <img src="https://placehold.co/600" class="w-100">
+      <h5>${products[i].title}</h5>
+      <p>가격 : ${products[i].price}</p>
+      <button class="btn btn-danger">주문하기</button>
+       </div>`;
+    $('.row').append(템플릿);
+   });
+  }); //완료
+  
   /* 더보기 버튼 누르면 상품 3개 가져와서 출력하기 */
    let clickCount =0; 
     $('#more').click(function(){
@@ -96,12 +115,55 @@
     console.log('가격 데이터 로딩 실패');
    });//완료
   });
-  
-  
-  
   });
-               
-          
+ 
+  
+  $('#sort1').click(function(){
+    let products = [
+    { id : 0, price : 70000, title : 'Blossom Dress' },
+    { id : 1, price : 50000, title : 'Springfield Shirt' },
+    { id : 2, price : 60000, title : 'Black Monastery' },
+    ];
+    products.sort(function(a,b){
+    if(a.title<b.title){
+      return 1
+    } else {
+      return -1
+    }
+  }); 
+  $('.row').html('');
+    products.forEach((a,i)=>{
+      let 템플릿 =
+     `<div class="col-sm-4">
+      <img src="https://placehold.co/600" class="w-100">
+      <h5>${products[i].title}</h5>
+      <p>가격 : ${products[i].price}</p>
+      <button class="btn btn-danger">주문하기</button>
+       </div>`;
+    $('.row').append(템플릿);
+   })
+  })
+  $('#filter').click(function(){
+    let products = [
+    { id : 0, price : 70000, title : 'Blossom Dress' },
+    { id : 1, price : 50000, title : 'Springfield Shirt' },
+    { id : 2, price : 60000, title : 'Black Monastery' },
+    ];
+    let newProduct = products.filter(function(a){
+      return a.price <= 60000 //노션 참고. 리턴문 + 중괄호 생략가능 ex)filter((a)=> a.price <= 6000) 
+    });
+    $('.row').html('');
+    newProduct.forEach((a,i)=>{ //반복문 쓸떄 꼭 변수값 newProduct[i]해주기
+      let 템플릿 =
+     `<div class="col-sm-4">
+      <img src="https://placehold.co/600" class="w-100">
+      <h5>${newProduct[i].title}</h5>
+      <p>가격 : ${newProduct[i].price}</p>
+      <button class="btn btn-danger">주문하기</button>
+       </div>`;
+    $('.row').append(템플릿);
+   })
+  })
      
  
       </script>
