@@ -38,8 +38,7 @@
         <button class="btn btn-danger" id="filter">6만원 이하</button>
 
       </div>
-      
-      
+           
 <script> //더보기 버튼
   $(document).ready(function(){
      let products = [
@@ -58,7 +57,7 @@
       <button class="buy">구매</button>
        </div>`;
     $('.row').append(템플릿);
-  });//~~~~~~~~~~~~완료
+  });//~~~~~~~~~~~~완료rr
   $('.sort').click(function(){
     products.sort(function(a,b){
       return a.price - b.price;
@@ -164,8 +163,18 @@
     $('.row').append(템플릿);
    })
   })
+ // $('.row').on('click','.buy',function(){ //접속시 최초 1회 뿐 아니라 row 범위 내에서 항상 작동하게끔하는 함수
+    $('.buy').click(function(e){
+      let title = $(e.target).siblings('h5').text();
      
- 
+    if(localStorage.getItem('cart') != null){ //cart가 있으면 
+      let 꺼낸거 = JSON.parse(localStorage.getItem('cart')); //로컬스토리지에 저장된 건 JSON문자형태
+      꺼낸거.push(title);
+    } else {
+       localStorage.setItem('cart',JSON.stringify([title])) //cart가 없으면
+    }
+  
+
       </script>
 </body>
 </html>
