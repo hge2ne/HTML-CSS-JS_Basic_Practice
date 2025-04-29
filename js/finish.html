@@ -27,7 +27,7 @@
     </div>
     <div class="container basket-wrap" style="background: white;">
         <h4>장바구니 (드래그 가능)</h4>
-        <div class="row basket">
+        <div class="row basket"> <!--  row : 행을 뜻함. css프레임워크(ex.부트스트랩) 없이는 작동X, "반응형 디자인" 목적-->
 
         </div>
     </div>
@@ -103,13 +103,200 @@ id : div 박스 이하의 정보 모두 {} 형태로 담겨있음
     $('.add').click(function(e){
         let productId = e.target.dataset.id; //**html요소에 [] 형태 데이터 저장. 노션
     //버튼 클릭시 누른 상품을 {}형태로 보관
-        let 몇번째 = cart.findIndex((a)=> {
-            return a.id == productId})
-        })
+        let 몇번째 = cart.findIndex((a)=> {return a.id == productId})
 
-      })   
+        if(몇번째 == -1){ //상품 수량 카운터
+            let 현재상품 =products.find((a)=>{return a.id == productId});
+            현재상품.count =1; //findIndex 조건에 부합하지 않으면 -1 출력
+            cart.push(현재상품); //cart 배열에 현재상품(선택한 상품요소) 넣어
+        } else {
+            cart[몇번째].count++; //cart 배열의 "몇번쨰" 위치에 있는 요소의 count값을 1 증가시킴
+        }
+        console.log(cart);
+        
+        //장바구니 까만 박스에 html 만들어주기
+        $('.basket').html('');
+        cart.forEach((a,i)=>{
+            $('.basket').append(`
+        <div class="col-md-3 bg-white">
+            <img src="${a.photo}">
+            <h4>${a.title}</h4>
+            <h4>${a.brand}</h4>
+            <p>가격 : ${a.price}</p>
+            <input type="number" value="#{a.count}" class="item-count w-100">
+        </div>`
+        );
+        });
+        //총 가격 계산기
+        가격계산(); //? JS의 "호이스팅" 개념 : 
+        // function 선언 함수는 script 실행 전에 메모리에 미리 등록됨. 순서 바뀌어도 ok
+
+        //input 실시간 변경 값 적용 계산기
+        $('.item-count').on('input',function(){
+            가격계산();
+        });
+    }); //add 버튼 끝
+
+    //===========================
+    //.item 드래그로 장바구니 추가 기능
+    //=============================
+/* 
+1. 드래그 시작 시, 드래그한 상품 e.target으로 dataTransfer어쩌구에 저장
+2. 까만 박스에 드랍이벤트 발생 시 어떤 상품이 드래그중인지 가져오기
+3. 장바구니 항목에 드래그 상품 항목 생성 
+*/
+
+    $('.item').on('dragstart',function(e){
+        e.originalEvent.dataTransfer.setData('id',e.target.dataset.id)
     });
+
+    $('.basket').on('dragover',function(e){
+        e.preventDefault();//basket(검정박스)위에 드래그중인 데이터가 올라왔을 때 발생. 드롭 실행 막음 (데이터저장X)
+    });
+    $('.basket').on('drop',function(e){
+        let productId = e.originalEvent.dataTransfer.getData('id');
+        console.log(productId); //배열보여줘
+        $('.add').eq(productId).click(); //단축했으니 이해하려고 하지 마셈
+    });
+
+/*
+dragstart : JS 이벤트핸들러 (드래그가 시작될때 이하 함수 실행)
+e. : JQuery 의 이벤트 래퍼(감쌈) (브라우저 이벤트객체 -> jQuery 이벤트객체 변환)
+e.originalEvent : 직역 :jQuery에 저장된 이벤트 객체 접근(지정)
+dragtransfer : 드래그앤드롭 이벤트 함수에서만 작동. 드래그 후 드롭할 동안에만 데이터 저장 드래그시작 :데이터저장. 드래그드롭 : 데이터출력
+
+*/
+    }); //then()끝
+        
+</script>
+
+<script>
+    //=================
+    //총가격 계산 표기 기능
+    //=================
+
+/*
+1. 현재 장바구니 첫 항목 수량,가격 곱셈
+2. 현재 장바구니 둘째 항목 수량, 가격 곱셈
+...
+3. 다 더해서 .final-price로 표기
+ */
+    function 가격계산(){
+
+        let finalPrice =0;
+
+        for(let i=0;i<$('.item-count').length;i++){ //선택상품갯수 될떄까지 반복문 돌려서 i 값 추가해
+            let price = $('.item-count').eq(i).val(); //상품 금액 선언
+            let count = $('.item-count').eq(i).siblings('p').text(); // 가격 텍스트로 상품 갯수 카운트
+            finalPrice +=parseFloat(price*count); 
+            //parseFloat : 함수 계산한 값을 실수로 변환.
+            //+= : 앞의 변수에 누적해서 더함.
+        }
+
+        console.log('총 가격',finalPrice);
+        $('.final-price').html('합계 ' + finalPrice) //final-price 라는 요소의 html내용을 finalPrice로 바꾼다. 넣는다
+
+    }
+</script>
+
+<script>
+      //===========================
+    //주문 누르면 뜨는 모달창, 영수증 기능 
+    //=========================== 
+
+    //1. 최하단 주문버튼 누르면 모달창1 띄워주기
+    //2. 유저가 모달창1에 뭐 입력하면 저장해둠
+    //3. 모달창1의 완료버튼 누르면 모달창2(영수증) 보여줌 근데 거기에 여러가지 정보들 적어줌
+
+    //1. 최하단 주문버튼 누르면 모달창1 띄워주기
+    $('.buy').click(function(){
+        $('modal1').css('display','block');
+    });
+    //2. 유저가 모달창1에 뭐 입력하면 저장해둠
+
+    let 성함 = ''; //input 되는 값 저장하기 위해 공백 선언
+    let 연락처 = '';
+
+    $('#name').on('input', function () {
+      성함 = $('#name').val();//funtion 함수 이렇게 선언한거임. id 위치에 값 저장해
+    });
+
+    $('#phone').on('input', function () {
+      연락처 = $('#phone').val();
+    });
+//모달창1 완료 버튼 누르면 , 모달창2(영수증) 보여줌
+//canvas 태그로 그림 출력(이미지 형태의 영수증)
+
+    $('.show-receipt').click(function(){
+        $('.modal1').css('display','none'); //완료 버튼 누르면 모달창 1 숨겨
+        $('.modal2').css('display','block'); // 모달창2 보여줘
+
+        let canvas = document.getElementById('canvas');
+        let c = canvas.getContext('2d');//c함수를 캔버스에 텍스트입력하는 것 으로 선언 
+        //getContext('2d') : 텍스트를 이미지형태로 입력
+        c.font = '16px dotum';
+        c.fillText('구매자 : ' + 성함, 20, 30);
+        c.fillText('연락처 : ' + 연락처, 20, 60);
+        c.fillText($('.final-price').html(), 20, 90);// 뒤에 숫자 2개는 좌표임. 해당위치에 이미지 넣어줌
     })
 </script>
+
+<script>
+ //===========================
+    //검색기능 
+    //=========================== 
+
+    //1. 검색창에 뭔가 입력될때마다 
+    //2. 지금입력한 검색어가 제목에 포함된 {상품}만 let products array에서 찾아서 변수같은 곳에 저장함
+    //3. 현재 상품목록 지우고 변수에 있던 상품들만 사용해서 다시 진열
+    //4. 진열된 상품들 제목부분에서 검색어 찾아서 노란색 배경 넣기
+
+    $('#search').on('input',function(){
+        let 검색어 = $('#search').val();
+
+        let newProducts =products.filter((a)=>{
+            return a.title.includes(검색어) || a.brand.includes(검색어)//검색어(상품명,브랜드)가 포함된 상품만 배열에서 찾아서 새 변수로 선언
+        });
+        $('.product-list').html(''); //현재 상품목록 지워. 검색어 변수에 포함된 상품들만 사용해서 재진열
+        newProducts.forEach((a,i)=>{
+            $('.product-list').append(`
+            <div class="col-md-3">
+            <img src="">
+            <h4>${a.title}</h4>
+            <h4>${a.brand}</h4>
+            <p>가격 : ${a.price}</p>
+            <button class="add" data-id="${a.id}">담기</button>
+          </div>`)
+        }); //재진열 끝
+
+      //4. 진열된 상품들 제목부분에서 검색어 찾아서 노란색 배경 넣기
+      //jQuery로 여러개 찾은건 each반복문 붙여야 잘됨 
+        $('.product-list h4').each(function(i,html요소){
+            let title = html요소.innerHTML; //html요소라는 변수에 title 값 넣어줘(모든 상품 리스트에 검색어 형광처리)
+            title = title.replace(검색어,`<span style="background : yellow">${검색어}</span>`); //빈태그로 감싸서 스타일 주기
+            console.log(title);
+
+            html요소.innerHTML = title; // 이 코드느 왜 있는 걸까? 아 위에 펑션문?
+            // 주의 상품명을 다시 달아서. $('.add') 이벤트 리스너 새로 달기. 위에꺼 복사하면 됨.
+        })
+
+    });
+
+
+</script>
+
+<script> 
+    //===========================
+    //모달창 2개 닫기 기능 
+    //===========================
+
+    $('.close').click(function (e) {
+      //그냥 2개 동시에 닫음
+      $(e.target).parents('.modal1').css('display', 'none');
+      $(e.target).parents('.modal2').css('display', 'none');
+    });
+
+</script>
+
 </body>
 </html>
