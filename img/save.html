@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="quiz">
+    <h4>물에 빠지면 누구 먼저 구할 거임?</h4>
+    <button>와이프</button>
+    <button>부모님</button>
+    <button>키우던 개</button>
+    </div>
+    
+
+    <script>
+    /* let 변수 = 2 + 2;
+    변수 값에 따라 조건문??(if문 외)
+    switch(변수){
+    case 3:변수
+    alert('변수가 3이네요');
+    break //switch 문 종료해라
+    case 4:변수
+    alert('변수가 3이네요');
+    break //switch 문 종료해라
+    difault:  (그 외의 상황)
+    alert('아무것도 해당안됨');
+    }
+    << if문 VS switch >>
+    if문 : 조건식 (등호사용) 가능
+    switch : 변수값. 등호비교== 만 가능*/
+    document.querySelector('#quiz').addEventListener('click',function(e){
+        switch(e.target.innerHTML){ //얘는 따로 선언할 필요없음. 함수 안에더 e변수로 정의됨.
+        case '와이프':e.target.innerHTML
+        alert('와이프를 좋아하시네요');
+        break 
+        case '부모님':e.target.innerHTML
+        alert('효녀시네요')
+        break
+        case '키우던 개':e.target.innerHTML
+        alert('사람보다 동물을 더 좋아하시네요')
+        break
+        }
+       
+    })
+    </script>
+</body>
+</html>
