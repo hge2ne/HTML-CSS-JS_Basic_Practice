@@ -20,7 +20,19 @@
         </div>
      
     </div>
-    <script>
+    <script> 
+        $(window).scroll(function(){
+            let 높이 = $(window).scrollTop(); //스크롤바 위치 알려줌
+            console.log(높이);
+            let y = (-1/500) * 높이 + (115/50);
+                $('.card-box').eq(0).css('opacity',y); //opacity : 투명도                         
+            let z = (-1/5000) * 높이 + 565/500;
+            $('.card-box').eq(0).css('transform',`scale(${z})`); 
+            /*  scale() : 입력값을 어떤 비율로 변환하는 함수 이미지 확대/축소할때 씀.
+            transform : 대상에 회전,이동,크기조절,기울이기 등 변형을 적용(변형 묶음)*/
+            
+           
+        });
         
     </script>
 </body>

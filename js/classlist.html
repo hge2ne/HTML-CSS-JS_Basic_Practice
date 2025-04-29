@@ -3,7 +3,6 @@
   <head>
     <!-- Required meta tags -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="main.css">
 
@@ -30,7 +29,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   -->
 
-    <nav class="navbar navber-light bg-light">
+    <nav class="navbar navbar-light bg-light">
      <div class="container-fluid">
          <span class="navbar-brand">JSShop</span>
          <span class="ms-auto mx-3 badge bg-dark">Dark   </span>
@@ -40,7 +39,7 @@
       </div>
       </nav>
 
-      <div class="lorem" style="width:200px; height: 100px; overflow:-y:scroll;"
+      <div class="lorem" style="width:200px; height: 100px; overflow:-y:scroll;"></div>
       <script>
         window.addEventListener('scroll', function(){
           console.log(window.scrollY)
@@ -75,16 +74,17 @@
     </ul>
     
     <div style="height: 1000px;"></div>
-    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 
         $('form').on('submit',function(){
           var 입력한값 = document.getElementById('email').value;
-          var 비번 = document.getElementById('password').
-          if (document.getElementById('email').value == '');{
+          var 비번 = document.getElementById('password').value;
+          if (document.getElementById('email').value == ''){
             alert('아이디입력안함');
           }
-          if (/\S+@\S+.\S+/.test(입력한값)){
+          if (/\S+@\S+\.\S+/.test(입력한값)){
             alert('이메일형식아님')
 
           }
@@ -121,7 +121,7 @@
     
         //비번에 영어대문자 ?? 적어도 하나//
         $('form').on('submit', function(){
-          if([A-Z].test(비번)){
+          if(/[A-Z]/.test(비번)){
             alert('대문자하나이상포함');
           }
         });
@@ -130,13 +130,13 @@
   <div style="overflow: hidden">
      <div class="slide-container">
       <div class="slide-box">
-         <img src="31cebb61c56f0c1070f5927b5c088ee0.jpg">
+         <img src="31cebb61c56f0c1070f5927b5c088ee0.jpg" draggable="false"> <!-- 드래그했을 때 요소 안 끌어짐 -->
        </div>
       <div class="slide-box">
-         <img src="a4b77288b6178cb4cef869b95016ed02.jpg">
+         <img src="a4b77288b6178cb4cef869b95016ed02.jpg" draggable="false">
        </div>
        <div class="slide-box">
-         <img src="d001fe8487e6dbdc0c7097571bd198e6.jpg">
+         <img src="d001fe8487e6dbdc0c7097571bd198e6.jpg" draggable="false">
        </div>
    </div>
    </div> 
@@ -152,28 +152,26 @@
       <div class="slide">3</div>
     </div>
   </div>
- 
+
+
+
    <script>
      let 지금사진 = 1;
   
 
     $('.slide-1').on('click', function(){
       $('.slide-container').css('transform', 'translateX(0vw)');
+      지금사진 =1;
     });
     $('.slide-2').on('click', function(){
       $('.slide-container').css('transform', 'translateX(-100vw)');
+      지금사진 =2;
     });
     $('.slide-3').on('click', function(){
       $('.slide-container').css('transform', 'translateX(-200vw)');
+      지금사진 =3;
     });
 
-    var = 지금사진 = 1;
-
-    $('.next').on('click',function(){
-      $('.slide-container').css('transform','translasteX(-' + 지금사진 + '00vw)');
-      지금사진 += 1;
-    })
-    
   $('.next').on('click', function(){
     if (지금사진 == 1) {
       $('.slide-container').css('transform', 'translateX(-100vw)');
@@ -184,8 +182,50 @@
       지금사진 += 1;
     }
   });
+
+  let 시작 = 0;
+  let 눌렀냐 = false;
+  
+  $('.slide-box').eq(0).on('mousedown',function(e){ //마우스 눌렀을 때 작동. click : 마우스다운+마우스업 기능
+    시작 = e.clientX; 
+    눌렀냐 = true;
+
+  });//마우스 x축 좌표 알려줌
+  $('.slide-box').eq(0).on('mousemove',function(e){  //기능1. 내가 드래그한 만큼 박스 이동
+    console.log(e.clientX-시작); 
+    if (눌렀냐 == true){
+    const 이동거리 = e.clientX-시작; //주의 이거 빼먹으면 작동X. 맨 위에 let으로 0 선언했는데 const 선언안해주면 콘솔안된다.
+      console.log('드래그 거리 :',이동거리);
+    $('.slide-container').css('transform',`translateX(${e.clientX-시작}px)`)
+      }
+  });
+
+  $('.slide-box').eq(0).on('mouseup',function(e){
+    눌렀냐 = false;
+    if(e.clientX - 시작 < -100){//왼쪽으로 이동하기 - (이동거리)
+      $('.slide-container').css('transition','all 0.5s').css('transform','translateX(-100vw)');//왼쪽으로 100 이동하면, 2번 사진 보여줘
+    } else {
+      $('.slide-container').css('transform','translateX(0vw)'); // 100 이하 이동하면 1번
+    }
+    setTimeout(()=>{ //직역 : 잠시후 500ms 후에 함수실행하라/ 노션 참고
+      $('.slide-container').css('transition','none')
+    },500) // 500ms = 0.5초
+    //trannsition 계속 걸어두면 드래그 디레이 발생. 드래그 마우스업 if문 끝나면 트랜지션 끊기
+    });
+/* 모바일 구현법
+위의 마우스 함수들 자리에 touch 넣기
+touch / start
+touch / move
+touch / end
+주의 : 손가락 여러개로 터치할 수도 있기때문에 
+시작 좌표 e. 뒤에 touches[0]. 붙여
+주의2 : if문 시작 좌표에도 e. 뒤에 changedTouches[0]. 붙여*/
+
+//모바일,웹에서 다 작동하게 하려면? = Hammer.js 라이브러리
    </script>
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   
+
+   
 
   </body>
 

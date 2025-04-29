@@ -12,4 +12,5 @@
     position: sticky;
     top : 400px;
     margin-top: 200px;
+    transition: all 0.2s; /* 0.2초마다 동작(부드러움) */
 }
